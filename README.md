@@ -1,7 +1,7 @@
 # Summary
 
 Game of life implementation in go. Starting simple with desktop app for user to play game of life on 100x100 grid.
-Will iternate on design to make game more configurable for different types of experimentation.
+Will iterate on design to make game more configurable for different types of experimentation.
 
 ## Future plans
 
