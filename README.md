@@ -15,8 +15,8 @@
 
 ### Classes
 
-- cells
-- grid
+- Cell
+- Grid
 
 ## View
 
