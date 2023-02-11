@@ -2,7 +2,7 @@
 
 1. make mvp of simple conway game of life
 2. hardcode 100x100 grid
-3. allow user to configure 
+3. allow user to configure/clear state before playing
 
 # Architecture
 
