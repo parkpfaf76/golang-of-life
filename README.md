@@ -51,7 +51,7 @@ Will flesh out features later.
 
 - play/pause
 - next state calculations for grid
-- rules for cells to abide for state update
+- manages rules for cells to abide for state update
 
 ### Classes
 
