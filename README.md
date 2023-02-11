@@ -1,4 +1,21 @@
-# Plan - Version 1.0.0
+# Summary
+
+Game of life implementation in go. Starting simple with desktop app for user to play game of life on 100x100 grid.
+Will iternate on design to make game more configurable for different types of experimentation.
+
+## Future plans
+
+Eventually want to develop into a 3d game of life model with variety of features, here's some current ideas:
+- seeds
+- user generated rules-
+- saved configurations
+- rotations
+- zoom
+- multiple game of life instances running in canvas (universes)
+
+Will flesh out features later.
+
+# Version 1.0.0
 
 1. make mvp of simple conway game of life
 2. hardcode 100x100 grid
@@ -10,8 +27,7 @@
 
 ### Requirements
 
-- cells
-- grid
+- cell, grid, and rules
 
 ### Classes
 
@@ -40,5 +56,3 @@
 ### Classes
 
 - Controller
-
-Controller manages View/Data
