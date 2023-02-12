@@ -16,6 +16,6 @@ func NewCell(posX int, poxY int, isAlive bool) cell {
 }
 
 func (c cell) IsAlive() bool {
-	fmt.Printf("isAlive=%b\n", c.isAlive)
+	fmt.Printf("isAlive=%t\n", c.isAlive)
 	return c.isAlive
 }
