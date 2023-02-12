@@ -7,6 +7,6 @@ import (
 
 func main() {
     log.Println("Parker's game of life in go!")
-    c := cell.New(0, 0, false);
+    c := models.NewCell(0, 0, false);
     c.IsAlive()
 }
