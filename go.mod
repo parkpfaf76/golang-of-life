@@ -1,5 +1,3 @@
-module example/hello
+module github.com/parkpfaf76/game-of-life
 
 go 1.14
-
-require rsc.io/quote v1.5.2
