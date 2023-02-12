@@ -10,7 +10,7 @@ type cell struct {
 	isAlive 	bool
  }
 
- func New(posX string, poxY string, isAlive int) cell {  
+ func New(posX int, poxY int, isAlive bool) cell {  
     c := cell {posX, poxY, isAlive}
     return c
 }

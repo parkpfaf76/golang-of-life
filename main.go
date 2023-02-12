@@ -2,7 +2,7 @@ package main
 
 import (
     "log"
-	"github.com/parkpfaf76/golang-of-life/model/cell"
+	"github.com/parkpfaf76/golang-of-life/models"
 )
 
 func main() {
