@@ -21,7 +21,7 @@ func NewGameState(numRows int, numColumns int) gameState {
 
 // Controller exposed methods
 // GetCurrentGameStateGrid - no need to expose cell to controller - will return bool[][] true=alive false=dead
-func (gs *gameState) GetCurrentGameStateGrid()  {
+func (gs *gameState) GetCurrentGameStateGrid() [][]bool {
 	stateArray := [gs.grid.numRows][gs.grid.numColumns]bool{}
 
 	for rowIdx, _ := range gs.cellGrid2D {
