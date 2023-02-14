@@ -2,15 +2,13 @@ package models
 
 // structure for single cell
 type cell struct {
-	posX int
-	poxY int
 	numNeighbors int
 	isAlive bool
-	rules rules
+	cellRules cellRules
 }
 
-func newCell(posX int, poxY int, rules rules) *cell {
-	c := cell{posX, poxY, 0, isAlive, rules}
+func newCell(cellRules cellRules) *cell {
+	c := cell{0, isAlive, cellRules}
 	return &c
 }
 
@@ -23,15 +21,32 @@ func (c *cell) killCell() {
 	c.isAlive = false
 }
 
+func (c *cell) decrementNumNeighbors() {
+	c.numNeightbors--
+}
+
+func (c *cell) incrementNumNeighbors() {
+	c.numNeightbors++
+}
+
 func (c *cell) updateNumNeighbors(numNeightbors int) {
 	c.numNeightbors = numNeightbors
 }
 
-// get cell status
-func (c cell) isAlive() bool {
-	return c.isAlive
-}
+// return true if cell state change
+func (c *cell) updateToNextCellState() bool {
 
-func (c cell) getRules() rules {
-	return c.rules
+	if c.IsAlive() {
+		for _, currVal := range c.rules.numNeighborsToStayAlive {
+			if currVal == c.numNeighbors {
+				break
+			}
+		}
+		c.killCell()
+	} 
+	else {
+		if c.cellRules.numNeighborsToSpawn == c.numNeighbors {
+			c.spawnCell()
+		}
+	}
 }
