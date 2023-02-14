@@ -1,31 +1,6 @@
 package models
 
 // grid origin from top-left (always select cell by row X col)
-// ex.
-//	 		0			  1			     2
-// 					|            |
-// 					|            |
-// 					|            |
-// 	0				|            |
-// 					|            |
-// 					|            |
-// 					|            |
-// 	   _____________|____________|_______________
-// 					|            |
-// 	   		 		|            |
-// 	 		    	|            |
-// 	1				|            |
-//  				|            |
-//  				|            |
-//  	____________|____________|_______________
-//  				|            |
-//  				|            |
-//  				|            |
-// 2				|            |
-//     		  		|            |
-// 	    		 	|            |
-// 		   		 	|            |
-
 // cell grid
 type cellGrid2D struct {
 	numColumns int
