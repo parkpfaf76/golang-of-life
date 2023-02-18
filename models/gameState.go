@@ -49,21 +49,20 @@ func (gs *gameState) UpdateToNextFrame()  {
 }
 
 func (gs *gameState) SpawnCell(rowIdx int, colIdx int)  {
-	gs.cellGrid2D.getCell(rowIdx, colIdx).spawnCell()
+	&gs.cellGrid2D.getCell(rowIdx, colIdx).spawnCell()
 	gs.handleCellSpawnsEvent()
 }
 
 func (gs *gameState) KillCell(rowIdx int, colIdx int)  {
 	
-	gs.cellGrid2D.getCell(rowIdx, colIdx).killCell()
+	&gs.cellGrid2D.getCell(rowIdx, colIdx).killCell()
 	gs.handleCellDiesEvent()
 }
 
 func (gs *gameState) handleCellUpdate(rowIdx int, colIdx int)  {
 	if c.isAlive() {
 		gs.handleCellSpawnsEvent(rowIdx, colIdx)
-	}
-	else {
+	} else {
 		gs.handleCellDiesEvent(rowIdx, colIdx)
 	}
 }
@@ -78,7 +77,7 @@ func (gs *gameState) incrementSurroundingNeighbors(rowIdx int, colIdx int)  {
 				continue;
 			}
 
-			gs.cellGrid2D.getCell(i, j).incrementNumNeighbors()
+			&gs.cellGrid2D.getCell(i, j).incrementNumNeighbors()
 		}
     }
 }
@@ -92,7 +91,7 @@ func (gs *gameState) decrementSurroundingNeighbors(rowIdx int, colIdx int)  {
 				continue;
 			}
 
-			gs.cellGrid2D.getCell(i, j).decrementNumNeighbors()
+			&gs.cellGrid2D.getCell(i, j).decrementNumNeighbors()
 		}
     }
 }

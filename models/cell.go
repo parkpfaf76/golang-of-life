@@ -43,8 +43,7 @@ func (c *cell) updateToNextCellState() bool {
 			}
 		}
 		c.killCell()
-	} 
-	else {
+	} else {
 		if c.cellRules.numNeighborsToSpawn == c.numNeighbors {
 			c.spawnCell()
 		}
