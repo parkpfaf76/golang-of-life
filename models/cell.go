@@ -8,35 +8,35 @@ type cell struct {
 }
 
 func newCell(cellRules cellRules) *cell {
-	c := cell{0, isAlive, cellRules}
+	c := cell{0, false, cellRules}
 	return &c
 }
 
 // mutability methods
-func (c *cell) spawnCell() {
+func (c *cell) SpawnCell() {
 	c.isAlive = true
 }
 
-func (c *cell) killCell() {
+func (c *cell) KillCell() {
 	c.isAlive = false
 }
 
-func (c *cell) decrementNumNeighbors() {
+func (c *cell) DecrementNumNeighbors() {
 	c.numNeightbors--
 }
 
-func (c *cell) incrementNumNeighbors() {
+func (c *cell) IncrementNumNeighbors() {
 	c.numNeightbors++
 }
 
-func (c *cell) updateNumNeighbors(numNeightbors int) {
+func (c *cell) UpdateNumNeighbors(numNeightbors int) {
 	c.numNeightbors = numNeightbors
 }
 
 // return true if cell state change
-func (c *cell) updateToNextCellState() bool {
+func (c *cell) UpdateToNextCellState() bool {
 
-	if c.IsAlive() {
+	if c.isAlive {
 		for _, currVal := range c.rules.numNeighborsToStayAlive {
 			if currVal == c.numNeighbors {
 				break
