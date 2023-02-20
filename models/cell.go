@@ -8,7 +8,7 @@ type cell struct {
 }
 
 func newCell(cellRules cellRules) *cell {
-	c := cell{0, false, cellRules}
+	c := cell{0, true, cellRules}
 	return &c
 }
 
