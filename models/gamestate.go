@@ -16,11 +16,12 @@ func NewGameState(numRows int, numColumns int) *gameState {
 
 // GetCurrentGameStateGrid - no need to expose cell - will return bool[][] true=alive false=dead
 func (gs *gameState) GetCurrentGameStateGrid() [][]bool {
-	stateArray := make([][]bool, gs.cellGrid2D.numRows, gs.cellGrid2D.numColumns)
+	stateArray := make([][]bool, gs.cellGrid2D.numRows)
 
-	for rowIdx, cellRow := range stateArray {
-        for colIdx, _ := range cellRow {
-			stateArray[rowIdx][colIdx] = gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).isAlive;
+	for rowIdx := range stateArray {
+		stateArray[rowIdx] := make([]bool, gs.cellGrid2D.numColumns)
+        for colIdx := range stateArray[rowIdx] {
+			stateArray[colIdx] = append(stateArray[colIdx], gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).isAlive)
         }
     }
 
