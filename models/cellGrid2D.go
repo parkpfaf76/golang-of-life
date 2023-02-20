@@ -3,8 +3,7 @@ package models
 // grid origin from top-left (always select cell by row X col)
 // cell grid
 type cellGrid2D struct {
-	numColumns int
-	numRows int
+	numColumns, numRows int
 	cells [][]*cell
 }
 
