@@ -18,9 +18,9 @@ func NewGameState(numRows int, numColumns int) *gameState {
 func (gs *gameState) GetCurrentGameStateGrid() [][]bool {
 	stateArray := make([][]bool, gs.cellGrid2D.numRows)
 
-	for rowIdx := range stateArray {
-		stateArray[rowIdx] := make([]bool, gs.cellGrid2D.numColumns)
-        for colIdx := range stateArray[rowIdx] {
+	for rowIdx, cellRow := range stateArray {
+		stateArray[rowIdx] = make([]bool, gs.cellGrid2D.numColumns)
+        for colIdx := range cellRow {
 			stateArray[colIdx] = append(stateArray[colIdx], gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).isAlive)
         }
     }

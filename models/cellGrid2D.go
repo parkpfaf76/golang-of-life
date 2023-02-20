@@ -9,11 +9,12 @@ type cellGrid2D struct {
 
 
 func newCellGrid2D(numRows int, numColumns int) cellGrid2D {
-	cells := make([][]*cell,numRows, numColumns)
+	cells := make([][]*cell, numRows)
 
-	for _, cellRow := range cells {
-        for j := range cellRow {
-			cellRow[j] = newCell(newCellRules([]int{2,3}, 3)) // hard code rules in each cell for now (2 or 3 neighbors to stay alive, 3 neighbors to spawn)
+	for rowIdx := range cells {
+		cells[rowIdx] = make([]*cell, numColumns)
+        for colIdx := range cells[rowIdx] {
+			cells[colIdx] = append(cells[colIdx], newCell(newCellRules([]int{2,3}, 3))) // hard code rules in each cell for now (2 or 3 neighbors to stay alive, 3 neighbors to spawn)
         }
     }
 
