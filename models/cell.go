@@ -22,30 +22,34 @@ func (c *cell) KillCell() {
 }
 
 func (c *cell) DecrementNumNeighbors() {
-	c.numNeightbors--
+	c.numNeighbors--
 }
 
 func (c *cell) IncrementNumNeighbors() {
-	c.numNeightbors++
+	c.numNeighbors++
 }
 
-func (c *cell) UpdateNumNeighbors(numNeightbors int) {
-	c.numNeightbors = numNeightbors
+func (c *cell) UpdateNumNeighbors(numNeighbors int) {
+	c.numNeighbors = numNeighbors
 }
 
 // return true if cell state change
 func (c *cell) UpdateToNextCellState() bool {
 
 	if c.isAlive {
-		for _, currVal := range c.rules.numNeighborsToStayAlive {
+		for _, currVal := range c.cellRules.numNeighborsToStayAlive {
 			if currVal == c.numNeighbors {
-				break
+				return false
 			}
 		}
-		c.killCell()
+		c.KillCell()
+		return true
 	} else {
 		if c.cellRules.numNeighborsToSpawn == c.numNeighbors {
-			c.spawnCell()
+			c.SpawnCell()
+			return true
 		}
 	}
+
+	return false
 }

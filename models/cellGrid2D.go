@@ -10,21 +10,19 @@ type CellGrid2D struct {
 
 
 func NewCellGrid2D(numRows int, numColumns int) CellGrid2D {
-	cells := [numRows][numColumns]*cell{}
+	cells := make([][]*cell,numRows, numColumns)
 
-	for _, array := range cells {
+	for _, cellRow := range cells {
         for j := range cellRow {
-			cells = append(
-				cells,
-				newCell(newCellRules(new []int{2,3}, 3))) // hard code rules in each cell for now (2 or 3 neighbors to stay alive, 3 neighbors to spawn)
+			cellRow[j] = newCell(newCellRules([]int{2,3}, 3)) // hard code rules in each cell for now (2 or 3 neighbors to stay alive, 3 neighbors to spawn)
         }
     }
 
-	g := cellGrid2D{numRows, numColumns, cells}
+	g := CellGrid2D{numRows, numColumns, cells}
 	return g
 }
 
 // retrive cell
-func (c cellGrid2D) GetCellAtPos(rowIdx int, colIdx int) *cell {
-	return g.cells[rowIdx][colIdx]
+func (cg CellGrid2D) GetCellAtPos(rowIdx int, colIdx int) *cell {
+	return cg.cells[rowIdx][colIdx]
 }
