@@ -19,7 +19,7 @@ func main() {
 
 	// init game state
 	var numRows, numColumns int = 100, 100
-	gameState := NewGameState(numRows, numColumns)
+	gameState := models.NewGameState(numRows, numColumns)
 
 	// Create application with options
 	err := wails.Run(&options.App{
