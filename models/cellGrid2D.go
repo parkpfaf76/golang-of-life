@@ -5,12 +5,12 @@ package models
 type cellGrid2D struct {
 	numColumns int
 	numRows int
-	cells [][]cell
+	cells [][]*cell
 }
 
 
 func newCellGrid2D(numRows int, numColumns int) cellGrid2D {
-	cells := [numRows][numColumns]cell{}
+	cells := [numRows][numColumns]*cell{}
 
 	for _, array := range cells {
         for j := range cellRow {
@@ -25,6 +25,6 @@ func newCellGrid2D(numRows int, numColumns int) cellGrid2D {
 }
 
 // retrive cell
-func (c cellGrid2D) getCell(rowIdx int, colIdx int) cell {
+func (c cellGrid2D) getCell(rowIdx int, colIdx int) *cell {
 	return g.cells[rowIdx][colIdx]
 }
