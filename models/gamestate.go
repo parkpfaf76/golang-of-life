@@ -1,16 +1,11 @@
 package models
 
-import (
-    "math"
-)
-
 type gameState struct {
 	cellGrid2D cellGrid2D
 	totalNumberAlive int
 	totalNumberDeadCells int
 }
 
-// Entry point for controller to play game
 func NewGameState(numRows int, numColumns int) *gameState {
 	grid := newCellGrid2D(numRows, numColumns)
 	totalNumberAlive := 0
@@ -19,14 +14,13 @@ func NewGameState(numRows int, numColumns int) *gameState {
 	return &newGameState
 }
 
-// Controller exposed methods
-// GetCurrentGameStateGrid - no need to expose cell to controller - will return bool[][] true=alive false=dead
+// GetCurrentGameStateGrid - no need to expose cell - will return bool[][] true=alive false=dead
 func (gs *gameState) GetCurrentGameStateGrid() [][]bool {
-	stateArray := [gs.grid.numRows][gs.grid.numColumns]bool{}
+	stateArray := make([][]bool, gs.cellGrid2D.numRows, gs.cellGrid2D.numColumns)
 
-	for rowIdx, _ := range gs.cellGrid2D {
-        for colIdx, currCell := range cellRow {
-			stateArray[rowIdx][colIdx] = currCell.isAlive;
+	for rowIdx, cellRow := range stateArray {
+        for colIdx, _ := range cellRow {
+			stateArray[rowIdx][colIdx] = gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).isAlive;
         }
     }
 
@@ -37,9 +31,9 @@ func (gs *gameState) GetCurrentGameStateGrid() [][]bool {
 func (gs *gameState) UpdateToNextFrame()  {
 	var didCellUpdate bool
 
-	for rowIdx, cellRow := range gs.cellGrid2D {
-        for colIdx, currCell := range cellRow {
-			didCellUpdate = currCell.UpdateToNextCellState();
+	for rowIdx := 0; rowIdx < gs.cellGrid2D.numRows; rowIdx++ {
+        for colIdx := 0; colIdx < gs.cellGrid2D.numColumns; colIdx++ {
+			didCellUpdate = gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).updateToNextCellState();
 
 			if(didCellUpdate) {
 				gs.handleCellUpdate(rowIdx, colIdx)
@@ -49,18 +43,20 @@ func (gs *gameState) UpdateToNextFrame()  {
 }
 
 func (gs *gameState) SpawnCell(rowIdx int, colIdx int)  {
-	gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).SpawnCell()
-	gs.handleCellSpawnsEvent()
+	gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).spawnCell()
+	gs.handleCellSpawnsEvent(rowIdx, colIdx)
 }
 
 func (gs *gameState) KillCell(rowIdx int, colIdx int)  {
 	
-	gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).KillCell()
-	gs.handleCellDiesEvent()
+	gs.cellGrid2D.getCellAtPos(rowIdx, colIdx).killCell()
+	gs.handleCellDiesEvent(rowIdx, colIdx)
 }
 
 func (gs *gameState) handleCellUpdate(rowIdx int, colIdx int)  {
-	if c.isAlive() {
+	cell := gs.cellGrid2D.getCellAtPos(rowIdx, colIdx)
+
+	if cell.isAlive {
 		gs.handleCellSpawnsEvent(rowIdx, colIdx)
 	} else {
 		gs.handleCellDiesEvent(rowIdx, colIdx)
@@ -69,7 +65,7 @@ func (gs *gameState) handleCellUpdate(rowIdx int, colIdx int)  {
 
 // helpers
 func (gs *gameState) incrementSurroundingNeighbors(rowIdx int, colIdx int)  {
-	var startRowIdx, endRowIdx, startColIdx, endColIdx = getColRowSurroundingIndicies(rowIdx, colIdx)
+	var startRowIdx, endRowIdx, startColIdx, endColIdx = gs.getColRowSurroundingIndicies(rowIdx, colIdx)
 
 	for i := startRowIdx; i < endRowIdx; i++ {
         for j := startColIdx; j < endColIdx; i++ {
@@ -77,13 +73,13 @@ func (gs *gameState) incrementSurroundingNeighbors(rowIdx int, colIdx int)  {
 				continue;
 			}
 
-			gs.cellGrid2D.getCellAtPos(i, j).IncrementNumNeighbors()
+			gs.cellGrid2D.getCellAtPos(i, j).incrementNumNeighbors()
 		}
     }
 }
 
 func (gs *gameState) decrementSurroundingNeighbors(rowIdx int, colIdx int)  {
-	var startRowIdx, endRowIdx, startColIdx, endColIdx = getColRowSurroundingIndicies(rowIdx, colIdx)
+	var startRowIdx, endRowIdx, startColIdx, endColIdx = gs.getColRowSurroundingIndicies(rowIdx, colIdx)
 
 	for i := startRowIdx; i < endRowIdx; i++ {
         for j := startColIdx; j < endColIdx; i++ {
@@ -91,19 +87,19 @@ func (gs *gameState) decrementSurroundingNeighbors(rowIdx int, colIdx int)  {
 				continue;
 			}
 
-			gs.cellGrid2D.getCellAtPos(i, j).DecrementNumNeighbors()
+			gs.cellGrid2D.getCellAtPos(i, j).decrementNumNeighbors()
 		}
     }
 }
 
-func (gs *gameState) handleCellDiesEvent()  {
+func (gs *gameState) handleCellDiesEvent(rowIdx int, colIdx int)  {
 	gs.totalNumberAlive--;
 	gs.totalNumberDeadCells++;
-	gs.DecrementSurroundingNeighbors(rowIdx, colIdx)
+	gs.decrementSurroundingNeighbors(rowIdx, colIdx)
 }
 
-func (gs *gameState) handleCellSpawnsEvent()  {
-	gs.IncrementSurroundingNeighbors(rowIdx, colIdx)
+func (gs *gameState) handleCellSpawnsEvent(rowIdx int, colIdx int)  {
+	gs.incrementSurroundingNeighbors(rowIdx, colIdx)
 	gs.totalNumberAlive++;
 	gs.totalNumberDeadCells--;
 }
@@ -112,10 +108,29 @@ func (gs *gameState) handleCellSpawnsEvent()  {
 func (gs *gameState) getColRowSurroundingIndicies(rowIdx int, colIdx int) (int, int, int, int) {
 	var startRowIdx, endRowIdx, startColIdx, endColIdx int
 
-	startRowIdx = Min(0, rowIdx - 1)
-	endRowIdx = Max(rowIdx + 1, gs.cellGrid2D.height)
-	startColIdx = Min(colIdx - 1)
-	endColIdx = Max(colIdx + 1)
+	if rowIdx - 1 < 0 {
+		startRowIdx = 0
+	} else {
+		startRowIdx = rowIdx - 1
+	}
+
+	if rowIdx + 1 >= gs.cellGrid2D.numRows {
+		endRowIdx = gs.cellGrid2D.numRows - 1
+	} else {
+		endRowIdx = rowIdx + 1
+	}
+
+	if colIdx - 1 < 0 {
+		startColIdx = 0
+	} else {
+		startColIdx = colIdx - 1
+	}
+
+	if colIdx + 1 >= gs.cellGrid2D.numColumns {
+		endColIdx = gs.cellGrid2D.numColumns - 1
+	} else {
+		endColIdx = colIdx + 1
+	}
 
     return startRowIdx, endRowIdx, startColIdx, endColIdx
 }

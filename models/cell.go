@@ -13,28 +13,28 @@ func newCell(cellRules cellRules) *cell {
 }
 
 // mutability methods
-func (c *cell) SpawnCell() {
+func (c *cell) spawnCell() {
 	c.isAlive = true
 }
 
-func (c *cell) KillCell() {
+func (c *cell) killCell() {
 	c.isAlive = false
 }
 
-func (c *cell) DecrementNumNeighbors() {
+func (c *cell) decrementNumNeighbors() {
 	c.numNeighbors--
 }
 
-func (c *cell) IncrementNumNeighbors() {
+func (c *cell) incrementNumNeighbors() {
 	c.numNeighbors++
 }
 
-func (c *cell) UpdateNumNeighbors(numNeighbors int) {
+func (c *cell) updateNumNeighbors(numNeighbors int) {
 	c.numNeighbors = numNeighbors
 }
 
 // return true if cell state change
-func (c *cell) UpdateToNextCellState() bool {
+func (c *cell) updateToNextCellState() bool {
 
 	if c.isAlive {
 		for _, currVal := range c.cellRules.numNeighborsToStayAlive {
@@ -42,11 +42,11 @@ func (c *cell) UpdateToNextCellState() bool {
 				return false
 			}
 		}
-		c.KillCell()
+		c.killCell()
 		return true
 	} else {
 		if c.cellRules.numNeighborsToSpawn == c.numNeighbors {
-			c.SpawnCell()
+			c.spawnCell()
 			return true
 		}
 	}

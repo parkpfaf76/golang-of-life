@@ -18,11 +18,11 @@ func newCellGrid2D(numRows int, numColumns int) cellGrid2D {
         }
     }
 
-	g := CellGrid2D{numRows, numColumns, cells}
+	g := cellGrid2D{numRows, numColumns, cells}
 	return g
 }
 
 // retrive cell
-func (cg CellGrid2D) getCellAtPos(rowIdx int, colIdx int) *cell {
+func (cg cellGrid2D) getCellAtPos(rowIdx int, colIdx int) *cell {
 	return cg.cells[rowIdx][colIdx]
 }
