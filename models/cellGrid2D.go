@@ -2,14 +2,14 @@ package models
 
 // grid origin from top-left (always select cell by row X col)
 // cell grid
-type CellGrid2D struct {
+type cellGrid2D struct {
 	numColumns int
 	numRows int
 	cells [][]*cell
 }
 
 
-func NewCellGrid2D(numRows int, numColumns int) CellGrid2D {
+func newCellGrid2D(numRows int, numColumns int) cellGrid2D {
 	cells := make([][]*cell,numRows, numColumns)
 
 	for _, cellRow := range cells {
@@ -23,6 +23,6 @@ func NewCellGrid2D(numRows int, numColumns int) CellGrid2D {
 }
 
 // retrive cell
-func (cg CellGrid2D) GetCellAtPos(rowIdx int, colIdx int) *cell {
+func (cg CellGrid2D) getCellAtPos(rowIdx int, colIdx int) *cell {
 	return cg.cells[rowIdx][colIdx]
 }
