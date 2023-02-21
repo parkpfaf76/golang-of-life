@@ -7,9 +7,9 @@ type cell struct {
 	cellRules cellRules
 }
 
-func newCell(cellRules cellRules) *cell {
+func newCell(cellRules cellRules) cell {
 	c := cell{0, false, cellRules}
-	return &c
+	return c
 }
 
 // mutability methods

@@ -1,0 +1,19 @@
+.cell {
+    display: inline-block;
+    width: auto;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+}
+
+.cell:hover {
+    background-color: grey;
+ }
+
+.cellDeadColor {
+    background-color: white;
+}
+
+.cellAliveColor {
+    background-color: black;
+}

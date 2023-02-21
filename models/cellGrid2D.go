@@ -4,17 +4,17 @@ package models
 // cell grid
 type cellGrid2D struct {
 	numColumns, numRows int
-	cells [][]*cell
+	cells [][]cell
 }
 
 
 func newCellGrid2D(numRows int, numColumns int) cellGrid2D {
-	cells := make([][]*cell, numRows)
+	cells := make([][]cell, numRows)
 
 	for rowIdx := range cells {
-		cells[rowIdx] = make([]*cell, numColumns)
+		cells[rowIdx] = make([]cell, numColumns)
         for colIdx := range cells[rowIdx] {
-			cells[colIdx] = append(cells[colIdx], newCell(newCellRules([]int{2,3}, 3))) // hard code rules in each cell for now (2 or 3 neighbors to stay alive, 3 neighbors to spawn)
+			cells[rowIdx][colIdx] = newCell(newCellRules([]int{2,3}, 3)) // hard code rules in each cell for now (2 or 3 neighbors to stay alive, 3 neighbors to spawn)
         }
     }
 
@@ -23,6 +23,6 @@ func newCellGrid2D(numRows int, numColumns int) cellGrid2D {
 }
 
 // retrive cell
-func (cg cellGrid2D) getCellAtPos(rowIdx int, colIdx int) *cell {
-	return cg.cells[rowIdx][colIdx]
+func (cg cellGrid2D) getCells() [][]cell {
+	return cg.cells
 }
