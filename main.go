@@ -18,7 +18,7 @@ func main() {
 	app := NewApp()
 
 	// init game state
-	var numRows, numColumns int = 200, 200
+	var numRows, numColumns int = 100, 100
 	gameState := models.NewGameState(numRows, numColumns)
 
 	// Create application with options
