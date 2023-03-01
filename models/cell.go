@@ -34,7 +34,7 @@ func (c *cell) updateNumNeighbors(numNeighbors int) {
 }
 
 // return true if cell state change
-func (c *cell) updateToNextCellState() bool {
+func (c *cell) shouldCellUpdate() bool {
 
 	if c.isAlive {
 		for _, currVal := range c.cellRules.numNeighborsToStayAlive {
@@ -42,11 +42,9 @@ func (c *cell) updateToNextCellState() bool {
 				return false
 			}
 		}
-		c.killCell()
 		return true
 	} else {
 		if c.cellRules.numNeighborsToSpawn == c.numNeighbors {
-			c.spawnCell()
 			return true
 		}
 	}

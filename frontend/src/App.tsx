@@ -28,7 +28,7 @@ function App() {
     }, [])
 
     useEffect(() => {
-        const interval = setInterval(() => setTick(tick + 1), 500);
+        const interval = setInterval(() => setTick(tick + 1), 100);
 
         if (isPlaying) {
             UpdateToNextFrame()
@@ -41,7 +41,7 @@ function App() {
     }, [tick])
 
     let clearCurrentGameState = () => {
-        console.log("RESET CLICKED")
+        console.log("reset")
         ClearCurrentGameState()
         GetCurrentGameStateGrid().then(res => setCurrStateArray(res))
     }
@@ -73,7 +73,7 @@ function App() {
                             {isPlaying && <Pause onClick={() => setIsPlaying(false)} />}
                         </IconButton>
                         <IconButton color="inherit">
-                            <RestartAlt onClick={() => clearCurrentGameState()} />
+                            <RestartAlt onClick={clearCurrentGameState} />
                         </IconButton>
                     </Toolbar>
                 </AppBar>
